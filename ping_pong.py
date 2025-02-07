@@ -19,7 +19,9 @@ while gameOn:
 	for event in pygame.event.get():
 		print(event)
 
-
+		if event.type == pygame.QUIT:
+			print(event)
+			gameOn = not gameOn
 
 	# Update the display using flip
 	pygame.display.flip()
