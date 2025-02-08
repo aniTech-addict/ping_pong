@@ -12,22 +12,34 @@ pygame.display.set_caption('Badminton Game')
 img = pygame.image.load('logo.jpg')
 pygame.display.set_icon(img)
 
+border = (800,600)
 # Define the dimensions of screen object
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((border))
 
 # Game Variables
 gameOn = True
-SPEED = 1
+gameOver = False
+SPEED = 0.5
 player1_score = 0
 player2_score = 0
 player1_pos = pygame.Vector2(30, screen.get_height()/2-50)
 player2_pos = pygame.Vector2(760, screen.get_height()/2-50)
 
-# game loop
+
+'''def is_inside(player, border):
+    return (inner.left >= outer.left and
+            inner.right <= outer.right and
+            inner.top >= outer.top and
+            inner.bottom <= outer.bottom)
+
+# Example usage
+if not is_inside(player, border):
+    gameOver = True'''
+
+# Our game loop
 while gameOn:
 	# for loop through the event queue
 	for event in pygame.event.get():
-		print(event)
 
 		if event.type == pygame.QUIT:
 			print(event)
@@ -38,10 +50,11 @@ while gameOn:
 	#border
 	pygame.draw.rect(screen,"black", (0, 0, 800, 600),2)
 	
-	
+	player1_rect = [30, player1_pos.y, 10, 100]
+	player2_rect = [760,  player2_pos.y, 10, 100]
 	# Game Objects
-	player1 = pygame.draw.rect(screen,"blue", (30, player1_pos.y, 10, 100),0)
-	player2 = pygame.draw.rect(screen,"green", (760,  player2_pos.y, 10, 100),0)
+	pygame.draw.rect(screen,"blue", player1_rect,0)
+	pygame.draw.rect(screen,"green", player2_rect,0)
 
 	ball_pos = pygame.Vector2(screen.get_width()/2, screen.get_height()/2)
 	ball = pygame.draw.circle(screen,"red", (ball_pos.x, ball_pos.y), 10, 0)
@@ -50,14 +63,12 @@ while gameOn:
 
 	keys = pygame.key.get_pressed()
 
-	#player 1 movements
 	if keys[pygame.K_w]:
 		player1_pos.y += -SPEED
 
 	if keys[pygame.K_s]:
 		player1_pos.y += SPEED
 
-	#player 2 movements
 	if keys[pygame.K_UP]:
 		player2_pos.y += -SPEED
 
@@ -66,5 +77,5 @@ while gameOn:
 
 	pygame.display.update()
 
-
 	# Update the display using flip
+    
