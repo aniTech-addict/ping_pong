@@ -17,6 +17,7 @@ screen = pygame.display.set_mode((800, 600))
 
 # Game Variables
 gameOn = True
+SPEED = 5
 player1_score = 0
 player2_score = 0
 
@@ -45,6 +46,19 @@ while gameOn:
 
 	ball_pos = pygame.Vector2(screen.get_width()/2, screen.get_height()/2)
 	ball = pygame.draw.circle(screen,"red", (ball_pos.x, ball_pos.y), 10, 0)
+
+	# Movement Controls
+
+	keys = pygame.key.get_pressed()
+
+	if keys[pygame.K_w]  : #Prevent movement in reverse direction
+		player1_pos.y += SPEED
+
+	if keys[pygame.K_s] : #Prevent movement in reverse direction
+		player1_pos.y += -SPEED
+        
+        
+
 
 	# Update the display using flip
 	pygame.display.flip()
