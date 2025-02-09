@@ -2,10 +2,8 @@
 import pygame
 import random
 
-# import pygame.locals for easier 
-# access to key coordinates
+
 from pygame.locals import *
-# initialize pygame
 pygame.init()
 
 # setting game window
@@ -38,26 +36,38 @@ def text_screen(text, color, x, y):
     screen.blit(screen_print, (x, y))
 
 # Game Landing Page
+user_input = ""
 while not gameOver:
     screen.fill((255, 255, 255))
-    text_screen("Badminton Game", "white", screen.get_width() / 2 - 100, screen.get_height() / 2 - 50)
+    text_screen("Badminton Game", "black", screen.get_width() / 2 - 130, screen.get_height() / 2 - 200)
     
     # Start Button
-    button_rect = pygame.Rect(screen.get_width() / 2 - 60, screen.get_height() / 2+50, 100, 50)
+    button_rect = pygame.Rect(screen.get_width() / 2 - 60, screen.get_height() / 2 + 50, 100, 50)
     pygame.draw.rect(screen, "blue", button_rect)
     text_screen("Start", "white", button_rect.x + 20, button_rect.y + 10)
-    
+
+    # Input Box
+    input_box = pygame.Rect(screen.get_width() / 2 - 60, screen.get_height() / 2 - 50, 120, 32)
+    pygame.draw.rect(screen, "black", input_box, 2)
+    text_screen(user_input, "black", input_box.x + 5, input_box.y + 5)
+
     pygame.display.update()
     
     for event in pygame.event.get():
-        print(event)
         if event.type == pygame.QUIT:
-            gameOver = not gameOver
+            gameOver=not gameOver
             gameOn = False
             break
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if button_rect.collidepoint(event.pos):
                 gameOver = True  # Start the game
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN:
+                gameOver = True  # Start the game
+            elif event.key == pygame.K_BACKSPACE:
+                user_input = user_input[:-1]
+            else:
+                user_input += event.unicode  # Add character to input
 
 # Main Game Loop
 while gameOn:
@@ -74,8 +84,8 @@ while gameOn:
 			while not exit_game:
 				screen.fill("black")
 				text_screen("Game Over", "red", screen.get_width() / 2, screen.get_height() / 2)
-				text_screen("Player 1 : "+str(player1_score),"red",screen.get_width()/2,screen.get_height()/2+50)
-				text_screen("Player 2 : "+str(player2_score),"red",screen.get_width()/2,screen.get_height()/2+100)
+				text_screen(str(player1_name)+" : "+str(player1_score),"red",screen.get_width()/2,screen.get_height()/2+50)
+				text_screen(str(player2_name)+" : "+str(player2_score),"red",screen.get_width()/2,screen.get_height()/2+100)
 				pygame.display.update()
 				pygame.time.delay(5000)
 				exit_game = True
