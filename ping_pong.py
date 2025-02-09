@@ -40,29 +40,34 @@ def text_screen(text, color, x, y):
 # Game Landing Page
 while not gameOver:
     screen.fill((255, 255, 255))
-    text_screen("Badminton Game", "black", screen.get_width() / 2 - 100, screen.get_height() / 2 - 50)
+    text_screen("Badminton Game", "white", screen.get_width() / 2 - 100, screen.get_height() / 2 - 50)
     
     # Start Button
-    button_rect = pygame.Rect(screen.get_width() / 2 - 50, screen.get_height() / 2, 100, 50)
+    button_rect = pygame.Rect(screen.get_width() / 2 - 60, screen.get_height() / 2+50, 100, 50)
     pygame.draw.rect(screen, "blue", button_rect)
     text_screen("Start", "white", button_rect.x + 20, button_rect.y + 10)
     
+    pygame.display.update()
+    
     for event in pygame.event.get():
+        print(event)
         if event.type == pygame.QUIT:
+            gameOver = not gameOver
             gameOn = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
+            break
+        elif event.type == pygame.MOUSEBUTTONDOWN:
             if button_rect.collidepoint(event.pos):
                 gameOver = True  # Start the game
 
 # Main Game Loop
-while gameOn and gameOver:
+while gameOn:
 
     # for loop through the event queue
 
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
-			print(event)
-			gameOn = not gameOn
+			gameOn = False
+
 
 		if (ball_pos.x > screen.get_width() or ball_pos.x < 0) :
 			gameOn = not True
