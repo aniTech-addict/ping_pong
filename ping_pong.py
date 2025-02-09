@@ -48,7 +48,7 @@ while gameOn:
 			print(event)
 			gameOn = not gameOn
 
-		if (ball_pos.x > screen.get_width() or ball_pos.x < 0) or (ball_pos.y > screen.get_height() or ball_pos.y < 0):
+		if (ball_pos.x > screen.get_width() or ball_pos.x < 0) :
 			game_on = not True
 			print("game over")
 			while not exit_game:
@@ -78,19 +78,19 @@ while gameOn:
 
 	keys = pygame.key.get_pressed()
 
-	if keys[pygame.K_w]:
-		player1_pos.y += -SPEED
+	if keys[pygame.K_w] and player1_pos.y > 2:
+		player1_pos.y -= SPEED
 
-	if keys[pygame.K_s]:
+	if keys[pygame.K_s] and player1_pos.y < screen.get_height() - 102:
 		player1_pos.y += SPEED
 
-	if keys[pygame.K_UP]:
-		player2_pos.y += -SPEED
+	if keys[pygame.K_UP] and player2_pos.y > 2:
+		player2_pos.y -= SPEED
 
-	if keys[pygame.K_DOWN]:
+	if keys[pygame.K_DOWN] and player2_pos.y < screen.get_height() - 102:
 		player2_pos.y += SPEED
+
 
 	pygame.display.update()
 
 	# Update the display using flip
-    
